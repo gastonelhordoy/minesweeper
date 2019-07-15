@@ -16,7 +16,9 @@
     "minesweeper-common": "^1.0.0",
     "minesweeper-core": "^1.0.0",
     "morgan": "^1.8.1",
-    "response-time": "^2.3.2"
+    "response-time": "^2.3.2",
+    "swagger-jsdoc": "^3.3.0",
+    "swagger-ui-express": "^4.0.7"
   },
   "devDependencies": {
     "cross-env": "^5.0.0",
@@ -28,6 +30,7 @@
     "npm": "6.x"
   },
   "scripts": {
+    "start": "node app.js",
     "format": "standard --fix",
     "test": "standard && cross-env NODE_ENV=test ../../node_modules/.bin/_mocha test",
     "coverage": "cross-env NODE_ENV=test istanbul cover ../../node_modules/.bin/_mocha test"

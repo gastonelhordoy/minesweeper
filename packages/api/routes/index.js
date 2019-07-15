@@ -3,6 +3,15 @@
 const winston = require('winston')
 const router = require('express').Router()
 const responseTime = require('response-time')
+
+const swaggerUi = require('swagger-ui-express')
+const swaggerJSDoc = require('swagger-jsdoc')
+const swaggerDef = require('./swaggerDef-v1')
+const swaggerSpec = swaggerJSDoc({
+  definition: swaggerDef,
+  apis: swaggerDef.apis
+})
+
 const common = require('irie-utils')
 const core = require('minesweeper-core')
 const errorManager = core.errorManager
@@ -17,6 +26,13 @@ const routes = common.requireAll(__dirname, {
 router.get('/', function rootRoute (req, res) {
   res.send({ result: 'OK' })
 })
+// router.get(/^\/api-docs(?:\.json)?$/, (req, res) => {
+router.get('/api-docs.json', (req, res) => {
+  res.json(swaggerSpec)
+})
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  explorer: false
+}))
 
 module.exports = function buildRoutes (app) {
   // bind res.json so it can be passed as a handler in then methods for promises
