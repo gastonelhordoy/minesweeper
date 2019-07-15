@@ -191,11 +191,48 @@ function mount () {
    *       404:
    *         description: Not Found. There is no game with the specified identifier.
    *       409:
-   *         description: Game is not active and therefore it cannot be marked as abandoned.
+   *         description: Conflict. Game is not active and therefore it cannot be marked as abandoned.
    */
   router.delete('/:id', ctrl.remove.bind(ctrl))
 
   // board actions
+  /**
+   * @swagger
+   * /games/{id}/board/{row}/{col}/reveal:
+   *   post:
+   *     description: Reveal/tap a cell
+   *     consumes:
+   *      - application/json
+   *     produces:
+   *      - application/json
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         description: The game identifier
+   *         required: true
+   *         type: string
+   *       - in: path
+   *         name: row
+   *         description: A row index
+   *         required: true
+   *         type: integer
+   *       - in: path
+   *         name: col
+   *         description: A column index
+   *         required: true
+   *         type: integer
+   *     responses:
+   *       200:
+   *         description: The updated game after tapping the cell.
+   *         schema:
+   *           $ref: '#/definitions/Game'
+   *       400:
+   *         description: Bad request. Invalid cell.
+   *       404:
+   *         description: Not Found. There is no game with the specified identifier.
+   *       409:
+   *         description: Conflict. Game is not active or cell has already been uncovered.
+   */
   router.post('/:id/board/:row/:col/reveal', ctrl.revealCell.bind(ctrl))
 
   return router
