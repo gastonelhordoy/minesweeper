@@ -20,6 +20,10 @@ Time tracking could also be implemented since we have the game creation timestam
 
 A command line interface (CLI tool) was implemented along with the API client library to show how to integrate it with the back-end services.
 
+**There are also 16 tests** built with Mocha and Chai.
+
+For more information check README files inside each sub-package.
+
 **Checklist for the original requirements:**
 - [x] Design and implement a documented RESTful API for the game (think of a mobile app for your API)
 - [x] Implement an API client library for the API designed above. Ideally, in a different language, of your preference, to the one used for the API
