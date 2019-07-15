@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "ignore": [".git/*", "Procfile", "README.md", "node_modules/*", "test/*", "migrations/*", "*.log"]
+}

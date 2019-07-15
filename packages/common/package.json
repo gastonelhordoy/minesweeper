@@ -1,0 +1,13 @@
+{
+  "name": "minesweeper-common",
+  "version": "1.0.0",
+  "description": "Common shared library",
+  "author": "Gaston Elhordoy",
+  "main": "./index.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "format": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

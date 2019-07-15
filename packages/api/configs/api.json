@@ -1,0 +1,15 @@
+{
+  "MUTE": false,
+  "LOG_LEVEL": "info",
+  "MORGAN_LEVEL": "short",
+  "PORT": 5001,
+  "CORS": {
+    "ORIGINS": ["*"]
+  },
+  "MONGODB": {
+    "URL": "mongodb://localhost/minesweeper",
+    "INDEXES": true,
+    "POOL_SIZE": 10,
+    "DEBUG_MODE": false
+  }
+}

@@ -1,0 +1,53 @@
+# compiled output
+packages/admin/dist
+packages/admin/tmp
+packages/mobile/platforms
+packages/guardians/dist
+packages/root/dist
+packages/root/tmp
+
+# dependencies
+node_modules/
+bower_components/
+
+# IDEs and editors
+.idea
+.project
+.classpath
+*.launch
+.settings/
+
+# misc
+.sass-cache/
+connect.lock
+coverage/
+npm-debug.log
+testem.log
+typings/
+pids/
+logs/
+.monitor
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+#System Files
+.DS_Store
+Thumbs.db
+*.development.json
+packages/mailer/test/output/*.html
+packages/mailer/test/output/*.txt
+*.pem
+*.jks
+packages/mobile/app/**/*.css
+packages/mobile/app/**/*.js
+packages/mobile/app/App_Resources/Android/drawable-*
+packages/mobile/app/App_Resources/Android/values*
+packages/mobile/app/App_Resources/Android/AndroidManifest.xml
+packages/mobile/app/App_Resources/Android/app.gradle
+packages/mobile/app/App_Resources/Android/google-services.json
+packages/mobile/app/App_Resources/Android/settings.json
+packages/mobile/app/config/config.json
+packages/mobile/app/App_Resources
+packages/mobile/dist
