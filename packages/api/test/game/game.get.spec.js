@@ -9,8 +9,8 @@ describe('GAME GET', async () => {
   const COLS = COLS_LIMITS.min
   const MINES = ROWS_LIMITS.min
 
-  beforeEach(() => {
-    return platform.data.startSandbox('game')
+  beforeEach(async () => {
+    await platform.data.startSandbox('game')
   })
 
   afterEach(platform.endSandbox)

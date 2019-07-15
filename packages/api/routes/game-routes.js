@@ -15,6 +15,14 @@ class GameController extends Controller {
       }
     })
   }
+
+  revealCell (req, res, next) {
+    const id = req.params.id
+    const row = parseInt(req.params.row)
+    const col = parseInt(req.params.col)
+
+    this.facade.revealCell(id, row, col).then(res.json).catch(next)
+  }
 }
 
 const ctrl = new GameController()
@@ -26,6 +34,9 @@ function mount () {
   router.post('/', ctrl.create.bind(ctrl))
   router.get('/:id', ctrl.getById.bind(ctrl))
   router.delete('/:id', ctrl.remove.bind(ctrl))
+
+  // board actions
+  router.post('/:id/board/:row/:col/reveal', ctrl.revealCell.bind(ctrl))
 
   return router
 }

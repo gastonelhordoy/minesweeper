@@ -6,7 +6,8 @@ const ENTITY_ASSERTIONS = {
 }
 
 const OBJECT_ASSERTIONS = {
-  matchGame: ['rows', 'cols', 'status', 'mines']
+  matchGame: ['rows', 'cols', 'status', 'mines'],
+  matchChange: ['row', 'col', 'status']
 }
 
 function buildEntityAssertion (chai, utils, name, properties, verifyId) {
