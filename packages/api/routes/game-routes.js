@@ -16,6 +16,23 @@ class GameController extends Controller {
     })
   }
 
+  markCell (req, res, next) {
+    const id = req.params.id
+    const row = parseInt(req.params.row)
+    const col = parseInt(req.params.col)
+    const type = req.body.type
+
+    this.facade.markCell(id, row, col, type).then(res.json).catch(next)
+  }
+
+  unmarkCell (req, res, next) {
+    const id = req.params.id
+    const row = parseInt(req.params.row)
+    const col = parseInt(req.params.col)
+
+    this.facade.unmarkCell(id, row, col).then(res.json).catch(next)
+  }
+
   revealCell (req, res, next) {
     const id = req.params.id
     const row = parseInt(req.params.row)
@@ -127,7 +144,7 @@ function mount () {
    * @swagger
    * /games:
    *   post:
-   *     description: Create new game
+   *     description: Create new game.
    *     consumes:
    *      - application/json
    *     produces:
@@ -135,7 +152,7 @@ function mount () {
    *     parameters:
    *       - in: body
    *         name: newGame
-   *         description: New game configuration
+   *         description: New game configuration.
    *         required: true
    *         schema:
    *           $ref: '#/definitions/NewGame'
@@ -153,13 +170,13 @@ function mount () {
    * @swagger
    * /games/{id}:
    *   get:
-   *     description: Retrieve a game by it's identifier
+   *     description: Retrieve a game by it's identifier.
    *     produces:
    *      - application/json
    *     parameters:
    *       - in: path
    *         name: id
-   *         description: The game identifier
+   *         description: The game identifier.
    *         required: true
    *         type: string
    *     responses:
@@ -176,13 +193,13 @@ function mount () {
    * @swagger
    * /games/{id}:
    *   delete:
-   *     description: Abandon a game
+   *     description: Abandon a game.
    *     produces:
    *      - application/json
    *     parameters:
    *       - in: path
    *         name: id
-   *         description: The game identifier
+   *         description: The game identifier.
    *         required: true
    *         type: string
    *     responses:
@@ -195,12 +212,11 @@ function mount () {
    */
   router.delete('/:id', ctrl.remove.bind(ctrl))
 
-  // board actions
   /**
    * @swagger
-   * /games/{id}/board/{row}/{col}/reveal:
+   * /games/{id}/board/{row}/{col}/mark:
    *   post:
-   *     description: Reveal/tap a cell
+   *     description: Mark a cell as either a flag or a question mark.
    *     consumes:
    *      - application/json
    *     produces:
@@ -208,17 +224,105 @@ function mount () {
    *     parameters:
    *       - in: path
    *         name: id
-   *         description: The game identifier
+   *         description: The game identifier.
    *         required: true
    *         type: string
    *       - in: path
    *         name: row
-   *         description: A row index
+   *         description: A row index.
    *         required: true
    *         type: integer
    *       - in: path
    *         name: col
-   *         description: A column index
+   *         description: A column index.
+   *         required: true
+   *         type: integer
+   *       - in: body
+   *         name: mark
+   *         description: The mark for the cell.
+   *         required: true
+   *         schema:
+   *           type: object
+   *           properties:
+   *             type:
+   *               type: string
+   *               enum: [flag, question]
+   *           required:
+   *             - type
+   *     responses:
+   *       200:
+   *         description: The updated game after marking the cell.
+   *         schema:
+   *           $ref: '#/definitions/Game'
+   *       400:
+   *         description: Bad request. Invalid cell.
+   *       404:
+   *         description: Not Found. There is no game with the specified identifier.
+   *       409:
+   *         description: Conflict. Game is not active or cell has already been uncovered.
+   */
+  router.post('/:id/board/:row/:col/mark', ctrl.markCell.bind(ctrl))
+
+  /**
+   * @swagger
+   * /games/{id}/board/{row}/{col}/mark:
+   *   delete:
+   *     description: Remloves a mark from a cell.
+   *     produces:
+   *      - application/json
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         description: The game identifier.
+   *         required: true
+   *         type: string
+   *       - in: path
+   *         name: row
+   *         description: A row index.
+   *         required: true
+   *         type: integer
+   *       - in: path
+   *         name: col
+   *         description: A column index.
+   *         required: true
+   *         type: integer
+   *     responses:
+   *       200:
+   *         description: The updated game after unmarking the cell.
+   *         schema:
+   *           $ref: '#/definitions/Game'
+   *       400:
+   *         description: Bad request. Invalid cell.
+   *       404:
+   *         description: Not Found. There is no game with the specified identifier.
+   *       409:
+   *         description: Conflict. Game is not active or cell hasn't been marked yet.
+   */
+  router.delete('/:id/board/:row/:col/mark', ctrl.unmarkCell.bind(ctrl))
+
+  /**
+   * @swagger
+   * /games/{id}/board/{row}/{col}/reveal:
+   *   post:
+   *     description: Reveal/tap a cell.
+   *     consumes:
+   *      - application/json
+   *     produces:
+   *      - application/json
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         description: The game identifier.
+   *         required: true
+   *         type: string
+   *       - in: path
+   *         name: row
+   *         description: A row index.
+   *         required: true
+   *         type: integer
+   *       - in: path
+   *         name: col
+   *         description: A column index.
    *         required: true
    *         type: integer
    *     responses:

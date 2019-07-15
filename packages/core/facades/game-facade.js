@@ -4,6 +4,7 @@ const _ = require('lodash')
 const {
   ROWS_LIMITS,
   COLS_LIMITS,
+  MARK_TYPES,
   CELL_STATUS,
   GAME_STATUS
 } = require('minesweeper-common').constants
@@ -76,6 +77,42 @@ class GameFacade extends Facade {
       throw this.errorManager.BadRequest('Invalid cell', { errors })
     }
     return { game, cell: game.board[row][col] }
+  }
+
+  async markCell (id, row, col, type, delta) {
+    const { game, cell } = await this.getByIdAndValidateCell(id, row, col, true)
+
+    // validate mark type
+    if (!_.includes(MARK_TYPES, type)) {
+      throw this.errorManager.BadRequest('Invalid request for marking a cell', {
+        errors: ['Invalid mark type']
+      })
+    }
+    // uncovered cells cannot be marked
+    if (cell.status === CELL_STATUS.uncovered) {
+      throw this.errorManager.Conflict('Cell has already been uncovered')
+    }
+
+    // update cell only if mark type is different from current one
+    if (cell.status !== type) {
+      cell.status = type
+      await game.save()
+    }
+    // return changes made to the board
+    return buildResult(game, [{ row, col, status: cell.status }], delta)
+  }
+
+  async unmarkCell (id, row, col, delta) {
+    const { game, cell } = await this.getByIdAndValidateCell(id, row, col, true)
+
+    // uncovered and pristine cells cannot be unmarked
+    if (!_.includes(MARK_TYPES, cell.status)) {
+      throw this.errorManager.Conflict('Cell has not been marked')
+    }
+
+    cell.status = CELL_STATUS.pristine
+    await game.save()
+    return buildResult(game, [{ row, col, status: cell.status }], delta)
   }
 
   async revealCell (id, row, col, delta) {

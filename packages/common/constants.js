@@ -16,6 +16,8 @@ const CELL_STATUS = {
   uncovered: 'uncovered'
 }
 
+const MARK_TYPES = [CELL_STATUS.question, CELL_STATUS.flag]
+
 const GAME_STATUS = {
   active: 'active',
   lost: 'lost',
@@ -27,6 +29,7 @@ module.exports = {
   ROWS_LIMITS,
   COLS_LIMITS,
 
+  MARK_TYPES,
   CELL_STATUS,
   GAME_STATUS
 }
