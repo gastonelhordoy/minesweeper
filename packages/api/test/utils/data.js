@@ -6,6 +6,9 @@ const Promise = require('bluebird')
 const faker = require('faker')
 faker.locale = 'en'
 
+const { ROWS_LIMITS, COLS_LIMITS, GAME_STATUS } = require('minesweeper-common').constants
+const boardHelper = require('minesweeper-common').board
+
 const CACHE = {
   models: []
 }
@@ -51,16 +54,14 @@ function insertObjects (objects, modelName, properties) {
     // if sequentialId plugin is applied to the schema then use #create method that triggers save hooks
     // http://mongoosejs.com/docs/api.html#model_Model.create
     // https://github.com/Automattic/mongoose/issues/2582
-    return SchemaModel.create(objects)
-      .then(bulkCreationHandler)
+    return SchemaModel.create(objects).then(bulkCreationHandler)
   }
 
   // http://mongoosejs.com/docs/api.html#model_Model.insertMany
   // https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/
   return SchemaModel.insertMany(objects, {
     ordered: false
-  })
-    .then(bulkCreationHandler)
+  }).then(bulkCreationHandler)
 }
 
 function mongoose () {
@@ -152,6 +153,35 @@ function shutdown () {
     })
 }
 
+function newGame (rows, cols, mines) {
+  rows = rows || faker.random.number(ROWS_LIMITS)
+  cols = cols || faker.random.number(COLS_LIMITS)
+  mines = mines || faker.random.number(10, (rows * cols) - 2)
+
+  const board = boardHelper.generateBoard(rows, cols, mines)
+  return {
+    rows,
+    cols,
+    cells: _.flatten(board),
+    status: GAME_STATUS.active
+  }
+}
+
+function createGame (rows, cols, mines) {
+  const object = newGame(rows, cols, mines)
+  return save('game', object).then(game => {
+    game.board = _.chunk(game.cells, game.cols)
+    return game
+  })
+}
+
+function createGames (quantity, rows, cols, mines) {
+  function newSerialGame () {
+    return newGame(rows, cols, mines)
+  }
+  return createObjects(quantity, newSerialGame, 'game')
+}
+
 module.exports = {
   model,
   removeMatchingModels,
@@ -160,5 +190,9 @@ module.exports = {
   endSandbox,
 
   init,
-  shutdown
+  shutdown,
+
+  newGame,
+  createGame,
+  createGames
 }

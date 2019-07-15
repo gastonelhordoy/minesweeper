@@ -1,5 +1,5 @@
 {
-  "MUTE": false,
+  "MUTE_ERROR_LOG": false,
   "LOG_LEVEL": "info",
   "MORGAN_LEVEL": "short",
   "PORT": 5001,

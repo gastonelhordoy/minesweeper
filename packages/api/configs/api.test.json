@@ -1,0 +1,8 @@
+{
+  "MUTE_ERROR_LOG": true,
+  "MORGAN_LEVEL": "mute",
+  "MONGODB": {
+    "URL": "mongodb://localhost/minesweeper-test",
+    "INDEXES": true
+  }
+}

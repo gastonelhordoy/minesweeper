@@ -1,5 +1,6 @@
 'use strict'
 
 module.exports = {
-  constants: require('./constants')
+  constants: require('./constants'),
+  board: require('./board')
 }

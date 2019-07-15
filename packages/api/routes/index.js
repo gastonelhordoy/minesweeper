@@ -7,6 +7,9 @@ const common = require('irie-utils')
 const core = require('minesweeper-core')
 const errorManager = core.errorManager
 
+const nconf = common.config('api')
+const MUTE_ERROR_LOG = nconf.isTrue('MUTE_ERROR_LOG')
+
 const routes = common.requireAll(__dirname, {
   stripFromName: '-routes'
 })
@@ -26,6 +29,8 @@ module.exports = function buildRoutes (app) {
   app.use(router)
   app.use(responseTime())
 
+  app.use('/api/v1/games', routes.game.mount())
+
   // CATCH ALL, if request reaches this point it means route was not found
   app.use(function notFoundController (req, res, next) {
     next(errorManager.NotFound('Service not found'))
@@ -35,7 +40,7 @@ module.exports = function buildRoutes (app) {
   app.use(function genericErrorMiddleware (err, req, res, next) {
     err.statusCode = err.statusCode || 500
 
-    if (err.statusCode !== 404) {
+    if (err.statusCode !== 404 && !MUTE_ERROR_LOG) {
       winston.error(err)
     }
 
