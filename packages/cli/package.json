@@ -1,0 +1,22 @@
+{
+  "name": "minesweeper-cli",
+  "version": "1.0.0",
+  "description": "Command Line Interface for minesweeper",
+  "author": "Gaston Elhordoy",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "format": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cli-table3": "^0.5.1",
+    "colors": "^1.3.3",
+    "minesweeper-client": "1.0.0",
+    "yargs": "^13.2.4"
+  },
+  "bin": {
+    "minesweeper": "./cli.js"
+  }
+}
