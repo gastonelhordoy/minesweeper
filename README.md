@@ -9,11 +9,11 @@ The project is structured following [Lerna's](https://lernajs.io/) recommendatio
 
 The project is composed by the following **packages**:
 
-- `core`: [Core library](./core/README.md) that handles business logic for the game and persistence. It is designed to be imported, used and exposed by other packages according to the needs. It can be exposed as RESTful services in a single monolith server, or through individual microservices, or it even be loaded directly into an Electron app.
-- `common`: [Shared library](./common/README.md) that has constant definitions and common utilities for handling a minesweeper board.
-- `api`: [API server](./api/README.md) exposing a RESTful interface for interacting with persistent minesweeper games.
-- `client`: [HTTP library](./client/README.md) to easily integrate with the REST services exposed by the API server.
-- `cli`: [Command-line tool](./cli/README.md) to interact with and display information from the API server through the client library.
+- `core`: [Core library](./packages/core/README.md) that handles business logic for the game and persistence. It is designed to be imported, used and exposed by other packages according to the needs. It can be exposed as RESTful services in a single monolith server, or through individual microservices, or it even be loaded directly into an Electron app.
+- `common`: [Shared library](./packages/common/README.md) that has constant definitions and common utilities for handling a minesweeper board.
+- `api`: [API server](./packages/api/README.md) exposing a RESTful interface for interacting with persistent minesweeper games.
+- `client`: [HTTP library](./packages/client/README.md) to easily integrate with the REST services exposed by the API server.
+- `cli`: [Command-line tool](./packages/cli/README.md) to interact with and display information from the API server through the client library.
 
 ## Development
 
