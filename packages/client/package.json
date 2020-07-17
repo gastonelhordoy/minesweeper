@@ -13,7 +13,7 @@
   "dependencies": {
     "bluebird": "^3.5.5",
     "http-errors": "^1.7.3",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "qs": "^6.7.0",
     "request": "^2.88.0"
   }
