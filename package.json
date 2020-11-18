@@ -28,7 +28,7 @@
     "husky": "^0.13.4",
     "lerna": "3.13.1",
     "mocha": "^5.2.0",
-    "semantic-release": "^15.13.18",
+    "semantic-release": "^17.2.3",
     "sinon": "^2.3.2",
     "standard": "^9.0.2"
   },
