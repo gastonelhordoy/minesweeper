@@ -1,0 +1,6 @@
+{
+  "MONGODB": {
+    "URL": "mongodb://minesweeper-app:m1n3sw3pP3r@ds263146.mlab.com:63146/minesweeper",
+    "INDEXES": true
+  }
+}

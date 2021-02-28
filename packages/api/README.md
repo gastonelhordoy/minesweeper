@@ -16,6 +16,8 @@ Run the following command in console/terminal:
 Swagger specification is published as JSON on the following URL:
 ```
 http://localhost:5001/api-docs.json
+
+https://minesweepper-api.herokuapp.com/api-docs/#/
 ```
 
 It can also be visualized with the Swagger UI navigating to:
